@@ -21,10 +21,10 @@ public class Player extends Entity {
     private static final int DEATH_SPRITES = 2;
     private static final int SPRITE_SCALE = 3;
 
-    private static final double ACCELERATION = 0.5;
+    private static final double ACCELERATION = 0.3;
     private static final double MAX_VELOCITY = 8;
     private static final double STOPPING_VELOCITY = 1;
-    private static final double GRAVITY = 0.45;
+    private static final double GRAVITY = 0.4;
     private static final double JUMP_FORCE = -10;
     private static final double MAX_FALLING_SPEED = 20;
 
@@ -92,12 +92,10 @@ public class Player extends Entity {
         if (keyHandler.leftPressed) {
             inputX = -1;
             facingDirection = -1;
-            direction = "left";
         }
         if (keyHandler.rightPressed) {
             inputX = 1;
             facingDirection = 1;
-            direction = "right";
         }
         if (keyHandler.spacePressed) {
             direction = "up";
@@ -130,7 +128,6 @@ public class Player extends Entity {
         if (keyHandler.spacePressed && isGrounded && currentState != State.DEAD) {
             velocityXY[1] = JUMP_FORCE;
             isGrounded = false;
-            facingDirection = (velocityXY[0] > 0) ? 1 : -1 ;
             animationFrame = 0;
         }
 
@@ -148,14 +145,13 @@ public class Player extends Entity {
             }
         }
 
-        direction = (velocityXY[0] < 0) ? "left" : "right";
+        if (velocityXY[0] < 0) direction = "left";
         gp.collisionManager.checkBlock(this);
         if (!collisionON) {
             coordXY[0] += velocityXY[0];
         } else {
             velocityXY[0] = 0;
         }
-
 
         int scaledWidth = SPRITE_WIDTH * SPRITE_SCALE;
         int scaledHeight = SPRITE_HEIGHT * SPRITE_SCALE;

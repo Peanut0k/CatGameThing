@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 
 public class BlockManager {
     GamePanel gp;
-    Block[] block;
+    public Block[] block;
     public int[][] mapBlockNum;
 
     public BlockManager(GamePanel gp) {
@@ -24,6 +24,10 @@ public class BlockManager {
 
     public void loadBlockImages() {
         try {
+            block[2] = new Block();
+            block[2].image = ImageIO.read(getClass().getResourceAsStream("/grass.png"));
+            block[2].collision = true;
+
             block[1] = new Block();
             block[1].image = ImageIO.read(getClass().getResourceAsStream("/Rock.png"));
             block[1].collision = true;
@@ -58,7 +62,6 @@ public class BlockManager {
             e.printStackTrace();
         }
     }
-
 
     public void draw(Graphics2D g2) {
         int col = 0;
